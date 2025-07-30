@@ -1,24 +1,25 @@
-import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+const canvas = document.getElementById("game") as HTMLCanvasElement;
+const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vite.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+const draw = () => {
+  ctx.drawImage(bg,
+    0, 0, bg.width, bg.height,
+    0, 0, ctx.canvas.width, ctx.canvas.height);
+}
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+const resize = () => {
+  const screenSize = canvas.parentElement!.getBoundingClientRect();
+  canvas.style.width = `${screenSize.width}px`;
+  canvas.style.height = `${screenSize.height}px`;
+}
+
+// shit starter code for now 
+const BG_SRC = "../assets/map.png";
+const bg = new Image();
+bg.src = BG_SRC;
+bg.onload = () => {
+  draw();
+}
+
+resize();
+window.addEventListener("resize", resize);

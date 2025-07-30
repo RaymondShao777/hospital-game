@@ -1,0 +1,14 @@
+body{
+  height: 100vh;
+}
+
+#wrapper {
+  height: 100%;
+}
+
+#game-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  align-self: center;
+}
