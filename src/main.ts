@@ -1,3 +1,5 @@
+import {InputDriver} from "./input.ts"
+
 const canvas = document.getElementById("game") as HTMLCanvasElement;
 const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
 
@@ -14,6 +16,10 @@ const resize = () => {
 }
 
 // shit starter code for now 
+const input = new InputDriver();
+window.addEventListener("keyup", (e) => {input.unsetKey(e)});
+window.addEventListener("keydown", (e) => {input.setKey(e)});
+
 const BG_SRC = "../assets/map.png";
 const bg = new Image();
 bg.src = BG_SRC;
