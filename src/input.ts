@@ -4,11 +4,15 @@ type KeyMap = {
   s: boolean;
   d: boolean;
 }
-const KEY_UP = false
-const KEY_DOWN = true
+const KEY_UP = false;
+const KEY_DOWN = true;
 
 export class InputDriver {
   public keyMap: KeyMap = {w: false, a: false, s: false, d: false};
+  public start() {
+    window.addEventListener("keyup", (e) => {this._unsetKey(e)});
+    window.addEventListener("keydown", (e) => {this._setKey(e)});
+  }
 
   private _modKey(event: KeyboardEvent, keyPressed: boolean) {
     if (event.key in this.keyMap) {
@@ -16,11 +20,11 @@ export class InputDriver {
     }
   }
 
-  public setKey(event: KeyboardEvent) {
+  private _setKey(event: KeyboardEvent) {
     this._modKey(event, KEY_DOWN);
   }
 
-  public unsetKey(event: KeyboardEvent) {
+  private _unsetKey(event: KeyboardEvent) {
     this._modKey(event, KEY_UP);
   }
 }
