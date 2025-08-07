@@ -9,9 +9,17 @@ const KEY_DOWN = true;
 
 export class InputDriver {
   public keyMap: KeyMap = {w: false, a: false, s: false, d: false};
+
   public start() {
     window.addEventListener("keyup", (e) => {this._unsetKey(e)});
     window.addEventListener("keydown", (e) => {this._setKey(e)});
+  }
+
+  public pressed(key: string) {
+    if (key in this.keyMap) {
+      return this.keyMap[key as keyof KeyMap];
+    }
+    return false;
   }
 
   private _modKey(event: KeyboardEvent, keyPressed: boolean) {

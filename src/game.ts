@@ -1,32 +1,31 @@
-import {InputDriver} from "./input.ts"
+import {InputDriver} from "./inputDriver.ts"
+import {DisplayDriver} from "./displayDriver.ts"
+import {GameState, PlayerObject} from "./gameState.ts"
 
-const BG_SRC = "../assets/map.png";
-const bg = new Image();
-bg.src = BG_SRC;
 
 export class Game {
-  // size
-  public width: number;
-  public height: number;
-
   // time
   private _start: number;
 
   // I/O & HUD
-  public input: InputDriver;
+  public inputDriver: InputDriver;
 
-  // Animation
-  public canvas: HTMLCanvasElement;
-  public ctx: CanvasRenderingContext2D;
+  // Animation/display
+  public displayDriver: DisplayDriver;
+
+  // Game State
+  public gameState: GameState;
 
   public constructor() {
-    this.input = new InputDriver();
-    this.canvas = document.getElementById("game") as HTMLCanvasElement;
-    this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
+    this.inputDriver = new InputDriver();
+    this.displayDriver = new DisplayDriver(this);
+    this.gameState = new GameState();
   }
 
   public start() {
-    this.input.start();
+    this.inputDriver.start();
+    //TODO DO THIS PART IN A JSON OR SOMETHING SO ITS NOT INSANE
+    this.gameState.addObject(new PlayerObject(this, 100, 100, 500, 500));
     //TODO set fixed framerate
     requestAnimationFrame((t) => {this.update(t)});
   }
@@ -35,25 +34,9 @@ export class Game {
     if (this._start === undefined) {
       this._start = timeStamp;
     }
-    this.resize();
-    console.log('resize');
-    this.draw();
+    this.gameState.update();
+
+    this.displayDriver.draw();
     requestAnimationFrame((t) => {this.update(t)});
-  }
-
-  // TODO keep aspect ratio fixed
-  public draw () {
-    this.ctx.drawImage(bg,
-      0, 0, bg.width, bg.height,
-      0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-  }
-
-  public resize() {
-    const screenSize = this.canvas.parentElement!.getBoundingClientRect();
-    this.canvas.style.width = `${screenSize.width}px`;
-    this.canvas.style.height = `${screenSize.height}px`;
-    const scale = window.devicePixelRatio;
-    this.canvas.width = Math.floor(screenSize.width * scale);
-    this.canvas.height = Math.floor(screenSize.height* scale);
   }
 }
