@@ -12,3 +12,11 @@ body{
   width: 100%;
   align-self: center;
 }
+
+#2dGame {
+  z-index: 0;
+}
+
+#3dGame {
+  z-index: 1;
+}

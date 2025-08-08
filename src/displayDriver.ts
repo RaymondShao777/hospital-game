@@ -11,7 +11,7 @@ export class DisplayDriver {
   public ctx: CanvasRenderingContext2D;
   public game: Game;
   public constructor(game: Game) {
-    this.canvas = document.getElementById("game") as HTMLCanvasElement;
+    this.canvas = document.getElementById("2dGame") as HTMLCanvasElement;
     this.ctx = this.canvas.getContext("2d") as CanvasRenderingContext2D;
     this.game = game;
   }
