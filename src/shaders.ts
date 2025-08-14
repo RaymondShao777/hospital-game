@@ -46,17 +46,21 @@ export class ShaderProgram {
 
   public attribLocations: {
     vertexPosition: GLint;
+    textureCoord: GLint;
   }
   uniformLocations: {
     projectionMatrix: WebGLUniformLocation;
     modelViewMatrix: WebGLUniformLocation;
+    uSampler: WebGLUniformLocation;
   }
 
   public constructor (gl: WebGLRenderingContext, vsSource: string, fsSource: string) {
     this.program = initShaderProgram(gl, vsSource, fsSource) as WebGLProgram;
     // TODO these can be discovered from source code? don't need to hard code this
-    this.attribLocations = {vertexPosition: gl.getAttribLocation(this.program, "aVertexPosition")};
+    this.attribLocations = {vertexPosition: gl.getAttribLocation(this.program, "aVertexPosition"),
+      textureCoord: gl.getAttribLocation(this.program, "aTextureCoord")};
     this.uniformLocations = {projectionMatrix:gl.getUniformLocation(this.program, "uProjectionMatrix") as WebGLUniformLocation,
-    modelViewMatrix:gl.getUniformLocation(this.program, "uModelViewMatrix") as WebGLUniformLocation}
+    modelViewMatrix:gl.getUniformLocation(this.program, "uModelViewMatrix") as WebGLUniformLocation,
+    uSampler: gl.getUniformLocation(this.program, "uSampler") as WebGLUniformLocation}
   }
 }
