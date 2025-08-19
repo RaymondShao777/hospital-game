@@ -1,6 +1,7 @@
 import {Game} from "./game.ts"
+import {SPRITE_MAP} from "./sprites.ts"
 
-const BG_SRC = "../assets/map.png";
+const BG_SRC = "../assets/tileset.png";
 const bg = await loadImage(BG_SRC) as HTMLImageElement;
 
 const PLAYER_SRC = "../assets/player.png";
@@ -19,11 +20,15 @@ export class DisplayDriver {
   // TODO keep aspect ratio fixed
   public draw() {
     this.resize();
+    this.ctx.imageSmoothingEnabled = false;
 
     // draw bg
+    this.ctx.fillStyle = "black";
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.drawImage(bg,
-      0, 0, bg.width, bg.height,
-      0, 0, this.canvas.width, this.canvas.height);
+      SPRITE_MAP[5].start, SPRITE_MAP[5].offset,
+      SPRITE_MAP[5].size, SPRITE_MAP[5].size,
+      0, 0, SPRITE_MAP[5].size*2, SPRITE_MAP[5].size*2);
 
     // draw objects
     this.game.gameState.objects.forEach((object) => {

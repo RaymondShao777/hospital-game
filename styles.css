@@ -14,6 +14,7 @@ body{
 }
 
 #2dGame {
+  image-rendering: pixelated;
   z-index: 0;
 }
 
